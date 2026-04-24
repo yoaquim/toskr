@@ -68,13 +68,13 @@
                 <Poster translation="[80, 0]" width="36" height="36" uri="pkg:/images/right.png" />
                 <Poster translation="[0, 0]" width="36" height="36" uri="pkg:/images/up.png" />
                 <Poster translation="[120, 0]" width="36" height="36" uri="pkg:/images/down.png" />
-                <Label translation="[0, 42]" width="156" horizAlign="center"
+                <Label translation="[0, 42]" width="160" horizAlign="center"
                        font="font:SmallBoldSystemFont" color="#904010" text="Navigate" />
             </Group>
             <!-- Select -->
             <Group>
-                <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
-                <Label translation="[0, 42]" width="120" horizAlign="center"
+                <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
+                <Label translation="[0, 42]" width="140" horizAlign="center"
                        font="font:SmallBoldSystemFont" color="#904010" text="Select" />
             </Group>
         </LayoutGroup>
