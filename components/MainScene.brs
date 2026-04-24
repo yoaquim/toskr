@@ -31,6 +31,8 @@ sub init()
     m.currentPlayingIndex = -1
     m.overlayVisible = false
     m.overlayState = ""  ' "nav" or "channels"
+    m.overlaySavedIndex = -1
+    m.overlayNavSavedIndex = -1
 
     ' Data
     m.navCodes = []
@@ -599,7 +601,8 @@ sub onOverlayItemSelected()
     index = m.overlayChannelList.itemSelected
 
     if m.overlayState = "nav"
-        ' Selected a country/category — fetch its channels
+        ' Save nav position before switching to channels
+        m.overlayNavSavedIndex = index
         if index < 0 or index >= m.navCodes.count() then return
         code = m.navCodes[index]
         m.selectedNavCode = code
@@ -758,14 +761,25 @@ end sub
 ' ===== OVERLAY =====
 
 sub showOverlay()
-    ' Start overlay at channel list if we have channels, otherwise nav
-    if m.displayedChannelData.count() > 0
+    m.overlayGroup.visible = true
+    m.overlayVisible = true
+
+    ' Restore previous overlay state and position if available
+    if m.overlayState = "channels" and m.displayedChannelData.count() > 0
+        showOverlayChannels()
+        if m.overlaySavedIndex >= 0
+            m.overlayChannelList.jumpToItem = m.overlaySavedIndex
+        end if
+    else if m.overlayState = "nav"
+        showOverlayNav()
+        if m.overlaySavedIndex >= 0
+            m.overlayChannelList.jumpToItem = m.overlaySavedIndex
+        end if
+    else if m.displayedChannelData.count() > 0
         showOverlayChannels()
     else
         showOverlayNav()
     end if
-    m.overlayGroup.visible = true
-    m.overlayVisible = true
 end sub
 
 sub showOverlayNav()
@@ -791,6 +805,11 @@ sub showOverlayNav()
     end if
 
     m.overlayChannelList.setFocus(true)
+
+    ' Restore saved nav position
+    if m.overlayNavSavedIndex >= 0
+        m.overlayChannelList.jumpToItem = m.overlayNavSavedIndex
+    end if
 end sub
 
 sub showOverlayChannels()
@@ -826,9 +845,11 @@ sub showOverlayChannels()
 end sub
 
 sub hideOverlay()
+    ' Save position before hiding
+    m.overlaySavedIndex = m.overlayChannelList.itemFocused
     m.overlayGroup.visible = false
     m.overlayVisible = false
-    m.overlayState = ""
+    ' Keep m.overlayState so we can restore on re-open
     m.top.setFocus(true)
 end sub
 
