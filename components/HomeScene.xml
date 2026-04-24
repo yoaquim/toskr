@@ -9,7 +9,7 @@
 
         <!-- Logo centered -->
         <Poster id="logo"
-                translation="[810, 180]"
+                translation="[810, 140]"
                 width="300"
                 height="120"
                 uri="pkg:/images/toskr.png" />
@@ -21,32 +21,40 @@
                color="#904010"
                horizAlign="center"
                width="1920"
-               translation="[0, 330]" />
+               translation="[0, 290]" />
 
-        <!-- Three cards centered — no background rects, use opacity for selection -->
+        <!-- Favorites banner (horizontal, centered above cards) -->
+        <Poster id="cardFavorites"
+                translation="[660, 360]"
+                width="600"
+                height="120"
+                opacity="0.4"
+                uri="pkg:/images/favorites-alt.png" />
+
+        <!-- Three cards centered -->
         <LayoutGroup id="cardRow"
-                      translation="[960, 400]"
+                      translation="[960, 510]"
                       layoutDirection="horiz"
                       horizAlignment="center"
                       itemSpacings="[60]">
 
             <Poster id="cardCountry"
-                    width="310"
-                    height="310"
+                    width="280"
+                    height="280"
                     opacity="1.0"
                     uri="pkg:/images/country.png" />
 
-            <Poster id="cardFavorites"
-                    width="310"
-                    height="310"
-                    opacity="0.4"
-                    uri="pkg:/images/favorites.png" />
-
             <Poster id="cardSurf"
-                    width="310"
-                    height="310"
+                    width="280"
+                    height="280"
                     opacity="0.4"
                     uri="pkg:/images/surf.png" />
+
+            <Poster id="cardRadio"
+                    width="280"
+                    height="280"
+                    opacity="0.4"
+                    uri="pkg:/images/radio.png" />
         </LayoutGroup>
 
         <!-- Hints centered -->
@@ -55,8 +63,8 @@
                color="#904010"
                horizAlign="center"
                width="1920"
-               translation="[0, 800]"
-               text="[Left/Right] Browse   [OK] Select" />
+               translation="[0, 850]"
+               text="[Up/Down] Browse   [Left/Right] Browse   [OK] Select" />
     </children>
 
     <script type="text/brightscript" uri="HomeScene.brs" />

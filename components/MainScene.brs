@@ -67,6 +67,8 @@ sub onViewModeSet()
     m.viewMode = m.top.viewMode
     if m.viewMode = "country"
         fetchCountries()
+    else if m.viewMode = "radio"
+        fetchRadioCountries()
     else if m.viewMode = "surf"
         loadSurfCategories()
     else if m.viewMode = "favorites"
@@ -170,6 +172,47 @@ sub onCountriesResponse()
     updateHints()
 end sub
 
+' ===== RADIO MODE =====
+
+sub fetchRadioCountries()
+    showLoading("Loading radio countries...")
+
+    task = createObject("roSGNode", "ApiTask")
+    task.requestUrl = "https://raw.githubusercontent.com/famelack/famelack-data/main/radio/raw/countries_metadata.json"
+    task.observeField("responseData", "onRadioCountriesResponse")
+    task.control = "run"
+    m.apiTask = task
+end sub
+
+sub onRadioCountriesResponse()
+    hideLoading()
+    raw = m.apiTask.responseData
+    data = parseJSON(raw)
+
+    if data = invalid
+        m.channelHeader.text = "Failed to load"
+        return
+    end if
+
+    m.navCodes = []
+    m.navNames = {}
+
+    for each code in data
+        country = data[code]
+        if country.hasChannels = true
+            m.navCodes.push(code)
+            m.navNames[code] = country.country
+        end if
+    end for
+
+    sortNavCodes()
+    buildNavContent()
+    m.navList.setFocus(true)
+    m.state = "browsing"
+    m.emptyText.text = "Select a country to browse radio stations"
+    updateHints()
+end sub
+
 sub sortNavCodes()
     codes = m.navCodes
     for i = 1 to codes.count() - 1
@@ -266,7 +309,11 @@ sub fetchChannels(code as string)
     end if
     m.channelCount.text = "Loading..."
 
-    baseUrl = "https://raw.githubusercontent.com/famelack/famelack-data/main/tv/raw/"
+    if m.viewMode = "radio"
+        baseUrl = "https://raw.githubusercontent.com/famelack/famelack-data/main/radio/raw/"
+    else
+        baseUrl = "https://raw.githubusercontent.com/famelack/famelack-data/main/tv/raw/"
+    end if
     if m.viewMode = "surf"
         url = baseUrl + "categories/" + lcase(code) + ".json"
     else
@@ -633,7 +680,11 @@ sub onOverlayItemSelected()
 end sub
 
 sub fetchOverlayChannels(code as string)
-    baseUrl = "https://raw.githubusercontent.com/famelack/famelack-data/main/tv/raw/"
+    if m.viewMode = "radio"
+        baseUrl = "https://raw.githubusercontent.com/famelack/famelack-data/main/radio/raw/"
+    else
+        baseUrl = "https://raw.githubusercontent.com/famelack/famelack-data/main/tv/raw/"
+    end if
     if m.viewMode = "surf"
         url = baseUrl + "categories/" + lcase(code) + ".json"
     else

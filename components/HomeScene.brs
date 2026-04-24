@@ -1,22 +1,34 @@
 sub init()
-    m.cards = ["country", "favorites", "surf"]
-    m.posters = [
+    ' Two rows: favorites (row 0) and cards (row 1)
+    m.focusRow = 1  ' Start on cards row
+    m.cardIndex = 0  ' Which card in the bottom row
+
+    m.favPoster = m.top.findNode("cardFavorites")
+    m.cardPosters = [
         m.top.findNode("cardCountry"),
-        m.top.findNode("cardFavorites"),
-        m.top.findNode("cardSurf")
+        m.top.findNode("cardSurf"),
+        m.top.findNode("cardRadio")
     ]
-    m.selectedIndex = 0
+    m.cardModes = ["country", "surf", "radio"]
 
     m.top.setFocus(true)
     updateFocus()
 end sub
 
 sub updateFocus()
-    for i = 0 to m.posters.count() - 1
-        if i = m.selectedIndex
-            m.posters[i].opacity = 1.0
+    ' Favorites banner
+    if m.focusRow = 0
+        m.favPoster.opacity = 1.0
+    else
+        m.favPoster.opacity = 0.4
+    end if
+
+    ' Bottom cards
+    for i = 0 to m.cardPosters.count() - 1
+        if m.focusRow = 1 and i = m.cardIndex
+            m.cardPosters[i].opacity = 1.0
         else
-            m.posters[i].opacity = 0.4
+            m.cardPosters[i].opacity = 0.4
         end if
     end for
 end sub
@@ -24,20 +36,36 @@ end sub
 function onKeyEvent(key as string, press as boolean) as boolean
     if not press then return false
 
-    if key = "right"
-        if m.selectedIndex < 2
-            m.selectedIndex = m.selectedIndex + 1
+    if key = "up"
+        if m.focusRow = 1
+            m.focusRow = 0
+            updateFocus()
+            return true
+        end if
+    else if key = "down"
+        if m.focusRow = 0
+            m.focusRow = 1
+            updateFocus()
+            return true
+        end if
+    else if key = "right"
+        if m.focusRow = 1 and m.cardIndex < 2
+            m.cardIndex = m.cardIndex + 1
             updateFocus()
             return true
         end if
     else if key = "left"
-        if m.selectedIndex > 0
-            m.selectedIndex = m.selectedIndex - 1
+        if m.focusRow = 1 and m.cardIndex > 0
+            m.cardIndex = m.cardIndex - 1
             updateFocus()
             return true
         end if
     else if key = "OK" or key = "play"
-        m.top.selectedMode = m.cards[m.selectedIndex]
+        if m.focusRow = 0
+            m.top.selectedMode = "favorites"
+        else
+            m.top.selectedMode = m.cardModes[m.cardIndex]
+        end if
         return true
     end if
 
