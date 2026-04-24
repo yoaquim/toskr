@@ -5,8 +5,8 @@
         <field id="focusPercent" type="float" onChange="onFocusChanged" />
     </interface>
     <children>
-        <Rectangle id="rowBg" width="860" height="56" color="#ffffff" />
-        <Rectangle id="focusBg" width="860" height="56" color="#f07020" visible="false" />
+        <Rectangle id="rowBg" width="860" height="56" color="#ffffff" cornerRadius="8" />
+        <Rectangle id="focusBg" width="860" height="56" color="#f07020" cornerRadius="8" visible="false" />
         <Rectangle id="accentBar" width="4" height="56" color="#f07020" visible="false" />
         <Label id="nameLabel"
                translation="[20, 14]"

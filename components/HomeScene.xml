@@ -23,7 +23,7 @@
                width="1920"
                translation="[0, 290]" />
 
-        <!-- Favorites banner (horizontal, centered above cards) -->
+        <!-- Favorites banner -->
         <Poster id="cardFavorites"
                 translation="[660, 360]"
                 width="600"
@@ -57,14 +57,27 @@
                     uri="pkg:/images/radio.png" />
         </LayoutGroup>
 
-        <!-- Hints centered -->
-        <Label id="homeHints"
-               font="font:SmallBoldSystemFont"
-               color="#904010"
-               horizAlign="center"
-               width="1920"
-               translation="[0, 850]"
-               text="[Up/Down] Browse   [Left/Right] Browse   [OK] Select" />
+        <!-- Hints: icon + label centered -->
+        <LayoutGroup translation="[960, 840]"
+                      layoutDirection="horiz"
+                      horizAlignment="center"
+                      itemSpacings="[40]">
+            <!-- Navigate -->
+            <Group>
+                <Poster translation="[40, 0]" width="36" height="36" uri="pkg:/images/left.png" />
+                <Poster translation="[80, 0]" width="36" height="36" uri="pkg:/images/right.png" />
+                <Poster translation="[0, 0]" width="36" height="36" uri="pkg:/images/up.png" />
+                <Poster translation="[120, 0]" width="36" height="36" uri="pkg:/images/down.png" />
+                <Label translation="[0, 42]" width="156" horizAlign="center"
+                       font="font:SmallBoldSystemFont" color="#904010" text="Navigate" />
+            </Group>
+            <!-- Select -->
+            <Group>
+                <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
+                <Label translation="[0, 42]" width="120" horizAlign="center"
+                       font="font:SmallBoldSystemFont" color="#904010" text="Select" />
+            </Group>
+        </LayoutGroup>
     </children>
 
     <script type="text/brightscript" uri="HomeScene.brs" />

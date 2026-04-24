@@ -5,7 +5,7 @@
         <field id="goHome" type="boolean" value="false" />
     </interface>
     <children>
-        <!-- === BROWSE UI (shown when not playing, or as overlay) === -->
+        <!-- === BROWSE UI === -->
         <Group id="browseUI">
             <!-- Backgrounds (full bleed) -->
             <Rectangle width="1920" height="1080" color="#ffffff" />
@@ -26,7 +26,7 @@
                    color="#904010"
                    translation="[250, 50]" />
 
-            <!-- Left panel: navigation list (countries or categories) -->
+            <!-- Left panel -->
             <MarkupGrid id="navList"
                          translation="[80, 125]"
                          itemSize="[380, 48]"
@@ -37,7 +37,7 @@
                          drawFocusFeedback="false"
                          itemComponentName="CountryItem" />
 
-            <!-- Right panel: channels -->
+            <!-- Right panel -->
             <Group id="rightPanel" translation="[500, 115]">
                 <Label id="channelHeader"
                        translation="[20, 12]"
@@ -64,7 +64,7 @@
 
                 <!-- Channel info sidebar -->
                 <Group id="channelInfo" translation="[900, 75]" visible="false">
-                    <Rectangle width="380" height="500" color="#faf5ef" />
+                    <Rectangle width="380" height="500" color="#faf5ef" cornerRadius="12" />
                     <Rectangle width="3" height="500" color="#f07020" opacity="0.4" />
                     <Label id="infoName"
                            translation="[20, 20]"
@@ -93,7 +93,6 @@
                            color="#906840" />
                 </Group>
 
-                <!-- Empty state -->
                 <Label id="emptyText"
                        translation="[20, 280]"
                        font="font:SmallSystemFont"
@@ -103,15 +102,58 @@
                        text="" />
             </Group>
 
-            <!-- Hints bar -->
-            <Label id="hintsText"
-                   translation="[90, 970]"
-                   font="font:SmallBoldSystemFont"
-                   color="#904010"
-                   text="" />
+            <!-- Browse hints: nav panel -->
+            <LayoutGroup id="hintsNav" translation="[960, 962]"
+                          layoutDirection="horiz" horizAlignment="center" itemSpacings="[40]">
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#904010" text="Select" />
+                </Group>
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/right.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#904010" text="Channels" />
+                </Group>
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/left.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#904010" text="Favorites" />
+                </Group>
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/replay.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#904010" text="Search" />
+                </Group>
+            </LayoutGroup>
+
+            <!-- Browse hints: channel panel -->
+            <LayoutGroup id="hintsChannel" translation="[960, 962]" visible="false"
+                          layoutDirection="horiz" horizAlignment="center" itemSpacings="[40]">
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#904010" text="Play" />
+                </Group>
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/play.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#904010" text="Favorite" />
+                </Group>
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/left.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#904010" text="Back" />
+                </Group>
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/replay.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#904010" text="Search" />
+                </Group>
+            </LayoutGroup>
         </Group>
 
-        <!-- === VIDEO PLAYER (behind overlay when browsing during playback) === -->
+        <!-- === VIDEO PLAYER === -->
         <Video id="player"
                translation="[0, 0]"
                width="1920"
@@ -120,15 +162,13 @@
                enableUI="false"
                enableTrickPlay="false" />
 
-        <!-- === OVERLAY (semi-transparent browse UI shown over playing video) === -->
+        <!-- === OVERLAY === -->
         <Group id="overlayGroup" visible="false">
             <Rectangle width="1920" height="1080" color="#000000" opacity="0.7" />
 
-            <!-- Overlay left panel -->
             <Rectangle translation="[0, 115]" width="480" height="840" color="#19100a" opacity="0.85" />
             <Rectangle translation="[480, 115]" width="2" height="840" color="#f07020" opacity="0.4" />
 
-            <!-- Overlay header with background -->
             <Rectangle translation="[0, 0]" width="480" height="115" color="#19100a" opacity="0.9" />
             <Label id="overlayTitle"
                    translation="[90, 45]"
@@ -137,7 +177,6 @@
                    width="370"
                    text="" />
 
-            <!-- Overlay channel list -->
             <MarkupGrid id="overlayChannelList"
                          translation="[80, 125]"
                          itemSize="[380, 48]"
@@ -150,11 +189,29 @@
 
             <!-- Overlay hints -->
             <Rectangle translation="[0, 955]" width="1920" height="125" color="#19100a" opacity="0.85" />
-            <Label id="overlayHints"
-                   translation="[90, 970]"
-                   font="font:SmallBoldSystemFont"
-                   color="#f07020"
-                   text="[OK] Select   [Play] Favorite   [Back] Back   [Right] Dismiss" />
+            <LayoutGroup translation="[960, 962]"
+                          layoutDirection="horiz" horizAlignment="center" itemSpacings="[40]">
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#f07020" text="Select" />
+                </Group>
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/play.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#f07020" text="Favorite" />
+                </Group>
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/left.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#f07020" text="Back" />
+                </Group>
+                <Group>
+                    <Poster translation="[42, 0]" width="36" height="36" uri="pkg:/images/right.png" />
+                    <Label translation="[0, 40]" width="120" horizAlign="center"
+                           font="font:SmallBoldSystemFont" color="#f07020" text="Dismiss" />
+                </Group>
+            </LayoutGroup>
         </Group>
 
         <!-- Loading overlay -->

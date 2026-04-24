@@ -5,8 +5,8 @@
         <field id="focusPercent" type="float" onChange="onFocusChanged" />
     </interface>
     <children>
-        <Rectangle id="bg" width="380" height="48" color="#f5ede3" />
-        <Rectangle id="focusBg" width="380" height="48" color="#f07020" visible="false" />
+        <Rectangle id="bg" width="380" height="48" color="#f5ede3" cornerRadius="8" />
+        <Rectangle id="focusBg" width="380" height="48" color="#f07020" cornerRadius="8" visible="false" />
         <Rectangle id="accentBar" width="3" height="48" color="#f07020" visible="false" />
         <Poster id="favIcon"
                 translation="[12, 8]"

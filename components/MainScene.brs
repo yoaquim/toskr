@@ -19,7 +19,8 @@ sub init()
     m.overlayChannelList = m.top.findNode("overlayChannelList")
     m.loadingGroup = m.top.findNode("loadingGroup")
     m.loadingText = m.top.findNode("loadingText")
-    m.hintsText = m.top.findNode("hintsText")
+    m.hintsNav = m.top.findNode("hintsNav")
+    m.hintsChannel = m.top.findNode("hintsChannel")
 
     ' State
     m.viewMode = ""
@@ -926,11 +927,9 @@ sub hideLoading()
 end sub
 
 sub updateHints()
-    if m.viewMode = "favorites" or m.focusedPanel = "right"
-        m.hintsText.text = "[OK] Play   [Play] Favorite   [Left] Back   [Replay] Search"
-    else
-        m.hintsText.text = "[OK] Select   [Right] Channels   [Left] Favorites   [Replay] Search"
-    end if
+    showChannelHints = (m.viewMode = "favorites" or m.focusedPanel = "right")
+    m.hintsNav.visible = not showChannelHints
+    m.hintsChannel.visible = showChannelHints
 end sub
 
 ' ===== KEY HANDLING =====
