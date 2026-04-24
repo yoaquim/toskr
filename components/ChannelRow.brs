@@ -12,24 +12,15 @@ sub onContentChanged()
     if content = invalid then return
 
     m.nameLabel.text = content.title
+    m.leftIcon.visible = false
+    m.nameLabel.translation = [20, 14]
 
-    ' Right icon: acorn for favorites
     if content.description = "fav"
         m.favIcon.uri = "pkg:/images/fav_acorn.png"
         m.favIcon.visible = true
     else
         m.favIcon.uri = ""
         m.favIcon.visible = false
-    end if
-
-    ' Left icon: YouTube logo
-    if content.description = "yt"
-        m.leftIcon.uri = "pkg:/images/youtube.png"
-        m.leftIcon.visible = true
-        m.nameLabel.translation = [60, 14]
-    else
-        m.leftIcon.visible = false
-        m.nameLabel.translation = [20, 14]
     end if
 end sub
 
