@@ -533,6 +533,16 @@ sub onLanguageSelected()
     end if
 end sub
 
+function detectStreamFormat(url as string) as string
+    u = lcase(url)
+    if instr(1, u, ".mp3") > 0 then return "mp3"
+    if instr(1, u, ".aac") > 0 then return "aac"
+    if instr(1, u, ".m3u8") > 0 then return "hls"
+    if instr(1, u, ".mpd") > 0 then return "dash"
+    if instr(1, u, ".mp4") > 0 then return "mp4"
+    return "hls"
+end function
+
 function fuzzyMatch(query as string, target as string) as integer
     q = lcase(query)
     t = lcase(target)
@@ -669,7 +679,7 @@ sub onOverlayItemSelected()
         videoContent = createObject("roSGNode", "ContentNode")
         videoContent.url = urls[0]
         videoContent.title = channel.name
-        videoContent.streamFormat = "hls"
+        videoContent.streamFormat = detectStreamFormat(videoContent.url)
         m.player.content = videoContent
         m.player.control = "play"
 
@@ -747,7 +757,7 @@ sub playStream(url as string, channelTitle as string)
     videoContent = createObject("roSGNode", "ContentNode")
     videoContent.url = url
     videoContent.title = channelTitle
-    videoContent.streamFormat = "hls"
+    videoContent.streamFormat = detectStreamFormat(videoContent.url)
 
     m.player.content = videoContent
     m.player.visible = true
@@ -768,7 +778,7 @@ sub onPlayerStateChange()
             videoContent = createObject("roSGNode", "ContentNode")
             videoContent.url = nextUrl
             videoContent.title = m.player.content.title
-            videoContent.streamFormat = "hls"
+            videoContent.streamFormat = detectStreamFormat(videoContent.url)
             m.player.content = videoContent
             m.player.control = "play"
         else
