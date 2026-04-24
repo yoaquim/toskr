@@ -778,13 +778,57 @@ sub playStream(url as string, channelTitle as string)
     if m.viewMode = "radio"
         m.radioDisplay.visible = true
         m.radioStationName.text = channelTitle
+
+        ' Start a buffering timeout for radio (10 seconds)
+        if m.bufferTimer = invalid
+            m.bufferTimer = createObject("roSGNode", "Timer")
+            m.bufferTimer.duration = 10
+            m.bufferTimer.repeat = false
+            m.bufferTimer.observeField("fire", "onBufferTimeout")
+        end if
+        m.bufferTimer.control = "start"
     else
         m.radioDisplay.visible = false
+        if m.bufferTimer <> invalid
+            m.bufferTimer.control = "stop"
+        end if
+    end if
+end sub
+
+sub onBufferTimeout()
+    ' If still buffering after timeout, try next URL or give up
+    if m.state = "playing" and m.player.state = "buffering"
+        if m.currentStreamIndex < m.currentStreamUrls.count() - 1
+            m.currentStreamIndex = m.currentStreamIndex + 1
+            nextUrl = m.currentStreamUrls[m.currentStreamIndex]
+            videoContent = createObject("roSGNode", "ContentNode")
+            videoContent.url = nextUrl
+            videoContent.title = m.player.content.title
+            videoContent.streamFormat = detectStreamFormat(nextUrl)
+            m.player.content = videoContent
+            m.player.control = "play"
+            ' Restart timer for next attempt
+            m.bufferTimer.control = "start"
+        else
+            ' All URLs timed out
+            if m.overlayVisible
+                m.overlayTitle.text = "Station unavailable"
+            else
+                showOverlay()
+                m.overlayTitle.text = "Station unavailable — choose another"
+            end if
+        end if
     end if
 end sub
 
 sub onPlayerStateChange()
     playerState = m.player.state
+
+    ' Cancel buffer timer if stream started playing
+    if playerState = "playing" and m.bufferTimer <> invalid
+        m.bufferTimer.control = "stop"
+    end if
+
     if playerState = "error"
         if m.currentStreamIndex < m.currentStreamUrls.count() - 1
             ' Try next stream URL

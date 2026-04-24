@@ -106,23 +106,23 @@
             <LayoutGroup id="hintsNav" translation="[960, 962]"
                           layoutDirection="horiz" horizAlignment="center" itemSpacings="[40]">
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#904010" text="Select" />
                 </Group>
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/right.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/right.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#904010" text="Channels" />
                 </Group>
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/left.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/left.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#904010" text="Favorites" />
                 </Group>
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/replay.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/replay.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#904010" text="Search" />
                 </Group>
             </LayoutGroup>
@@ -131,23 +131,23 @@
             <LayoutGroup id="hintsChannel" translation="[960, 962]" visible="false"
                           layoutDirection="horiz" horizAlignment="center" itemSpacings="[40]">
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#904010" text="Play" />
                 </Group>
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/play.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/play.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#904010" text="Favorite" />
                 </Group>
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/left.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/left.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#904010" text="Back" />
                 </Group>
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/replay.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/replay.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#904010" text="Search" />
                 </Group>
             </LayoutGroup>
@@ -186,18 +186,18 @@
             <LayoutGroup translation="[960, 800]"
                           layoutDirection="horiz" horizAlignment="center" itemSpacings="[40]">
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/play.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/play.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#f07020" text="Favorite" />
                 </Group>
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/left.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/left.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#f07020" text="Stations" />
                 </Group>
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#f07020" text="Stop" />
                 </Group>
             </LayoutGroup>
@@ -233,23 +233,23 @@
             <LayoutGroup translation="[960, 962]"
                           layoutDirection="horiz" horizAlignment="center" itemSpacings="[40]">
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/ok.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#f07020" text="Select" />
                 </Group>
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/play.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/play.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#f07020" text="Favorite" />
                 </Group>
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/left.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/left.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#f07020" text="Back" />
                 </Group>
                 <Group>
-                    <Poster translation="[52, 0]" width="36" height="36" uri="pkg:/images/right.png" />
-                    <Label translation="[0, 40]" width="140" horizAlign="center"
+                    <Poster translation="[62, 0]" width="36" height="36" uri="pkg:/images/right.png" />
+                    <Label translation="[0, 40]" width="160" horizAlign="center"
                            font="font:SmallBoldSystemFont" color="#f07020" text="Dismiss" />
                 </Group>
             </LayoutGroup>
