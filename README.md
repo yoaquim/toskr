@@ -2,22 +2,23 @@
   <img src="logo-bg.png" width="280" alt="toskr logo" />
 </p>
 
-<h3 align="center">Free live TV streams on your Roku</h3>
+<h3 align="center">Free live TV and radio streams on your Roku</h3>
 
 <p align="center">
-  A sideloadable Roku dev channel that aggregates publicly available live TV streams from around the world.
+  A sideloadable Roku dev channel that aggregates publicly available live TV and radio streams from around the world.
 </p>
 
 ---
 
 ## What it is
 
-Toskr is a Roku app that lets you browse and watch free, publicly available live TV streams. It pulls channel data from [famelack-data](https://github.com/famelack/famelack-data), an open-source directory of HLS stream URLs.
+Toskr is a Roku app that lets you browse and watch free, publicly available live TV streams and listen to radio stations. It pulls channel data from [famelack-data](https://github.com/famelack/famelack-data), an open-source directory of stream URLs.
 
-**Three ways to browse:**
-- **Country** — pick a country, see its channels
-- **Surf** — browse by category (News, Sports, Entertainment, etc.)
+**Four ways to browse:**
+- **Country** — pick a country, see its TV channels
+- **Surf** — browse TV by category (News, Sports, Entertainment, etc.)
 - **Favorites** — channels you've saved with the acorn
+- **Radio** — internet radio stations by country
 
 **While watching:**
 - Press **Left** to open a transparent overlay menu over the stream
@@ -25,6 +26,9 @@ Toskr is a Roku app that lets you browse and watch free, publicly available live
 - Press **Play** to favorite a channel
 - Filter by language (English, Spanish, French, and more)
 - Search channels and countries
+
+> [!WARNING]
+> **Radio is experimental.** Many radio streams in the underlying data are dead, use unsupported protocols, or hang indefinitely. Toskr includes a buffering timeout that will skip to the next stream URL or show "Station unavailable" after 10 seconds, but expect a low hit rate. TV streams are significantly more reliable.
 
 ## What it isn't
 
@@ -66,10 +70,11 @@ The app appears as a dev channel on your Roku home screen.
 
 | Context | OK | Play | Left | Right | Back | Replay |
 |---|---|---|---|---|---|---|
-| Home screen | Select | Select | Browse | Browse | — | — |
+| Home screen | Select | Select | Navigate | Navigate | — | — |
 | Browse (nav) | Select | Select | Jump to Favorites | Channels | Go home | Search |
 | Browse (channels) | Play | Favorite | Back to nav | — | Back to nav | Search |
-| Watching | — | Favorite | Open overlay | — | Stop | — |
+| Watching TV | — | Favorite | Open overlay | — | Stop | — |
+| Listening to Radio | Stop | Favorite | Open overlay | — | Stop | — |
 | Overlay | Select | Favorite | Back in overlay | Dismiss | Back / Dismiss | — |
 
 ## License
