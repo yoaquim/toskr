@@ -545,8 +545,8 @@ function detectStreamFormat(url as string) as string
     if instr(1, u, ".aac") > 0 then return "aac"
     if instr(1, u, ".ogg") > 0 then return "ogg"
     if instr(1, u, ".flac") > 0 then return "flac"
-    ' No clear extension — use mode-appropriate default
-    if m.viewMode = "radio" then return "mp3"
+    ' No clear extension — let Roku auto-detect for radio
+    if m.viewMode = "radio" then return ""
     return "hls"
 end function
 
@@ -687,7 +687,8 @@ sub onOverlayItemSelected()
         videoContent = createObject("roSGNode", "ContentNode")
         videoContent.url = urls[0]
         videoContent.title = channel.name
-        videoContent.streamFormat = detectStreamFormat(videoContent.url)
+        fmt = detectStreamFormat(videoContent.url)
+    if fmt <> "" then videoContent.streamFormat = fmt
         m.player.content = videoContent
         m.player.control = "play"
 
@@ -765,7 +766,8 @@ sub playStream(url as string, channelTitle as string)
     videoContent = createObject("roSGNode", "ContentNode")
     videoContent.url = url
     videoContent.title = channelTitle
-    videoContent.streamFormat = detectStreamFormat(videoContent.url)
+    fmt = detectStreamFormat(videoContent.url)
+    if fmt <> "" then videoContent.streamFormat = fmt
 
     m.player.content = videoContent
     m.player.visible = true
@@ -805,7 +807,8 @@ sub onBufferTimeout()
             videoContent = createObject("roSGNode", "ContentNode")
             videoContent.url = nextUrl
             videoContent.title = m.player.content.title
-            videoContent.streamFormat = detectStreamFormat(nextUrl)
+            fmt = detectStreamFormat(nextUrl)
+            if fmt <> "" then videoContent.streamFormat = fmt
             m.player.content = videoContent
             m.player.control = "play"
             ' Restart timer for next attempt
@@ -838,7 +841,8 @@ sub onPlayerStateChange()
             videoContent = createObject("roSGNode", "ContentNode")
             videoContent.url = nextUrl
             videoContent.title = m.player.content.title
-            videoContent.streamFormat = detectStreamFormat(videoContent.url)
+            fmt = detectStreamFormat(videoContent.url)
+    if fmt <> "" then videoContent.streamFormat = fmt
             m.player.content = videoContent
             m.player.control = "play"
         else
