@@ -1,12 +1,2 @@
 *.zip
 *.DS_Store
-
-# Source images (not needed for the Roku app)
-images/acorn.png
-images/1920x1080.png
-images/1280x720.png
-images/720x480.png
-images/336x210.png
-images/248x140.png
-images/108x69.png
-images/80x46.png
