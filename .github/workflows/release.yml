@@ -1,0 +1,80 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version from manifest
+        id: version
+        run: |
+          major=$(grep '^major_version' manifest | cut -d= -f2)
+          minor=$(grep '^minor_version' manifest | cut -d= -f2)
+          build=$(grep '^build_version' manifest | cut -d= -f2)
+          echo "version=v${major}.${minor}.${build}" >> "$GITHUB_OUTPUT"
+          echo "Version: v${major}.${minor}.${build}"
+
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          if git rev-parse "${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build zip
+        if: steps.check_tag.outputs.exists == 'false'
+        run: |
+          zip -r toskr.zip manifest source components images \
+            -x "images/acorn.png" \
+            -x "images/1920x1080.png" \
+            -x "images/1280x720.png" \
+            -x "images/720x480.png" \
+            -x "images/336x210.png" \
+            -x "images/248x140.png" \
+            -x "images/108x69.png" \
+            -x "images/80x46.png" \
+            -x "*.DS_Store"
+
+      - name: Generate release notes
+        if: steps.check_tag.outputs.exists == 'false'
+        id: notes
+        run: |
+          prev_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$prev_tag" ]; then
+            log=$(git log --oneline --no-decorate)
+          else
+            log=$(git log --oneline --no-decorate "${prev_tag}..HEAD")
+          fi
+          {
+            echo "notes<<EOF"
+            echo "$log"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create release
+        if: steps.check_tag.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}
+          body: |
+            ## Changes
+            ${{ steps.notes.outputs.notes }}
+
+            ## Install
+            1. Download `toskr.zip` below
+            2. Open `http://<your-roku-ip>` in a browser
+            3. Upload and **Install with zip**
+          files: toskr.zip

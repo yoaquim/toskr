@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="MainScene" extends="Scene" initialFocus="navList">
+    <interface>
+        <field id="viewMode" type="string" onChange="onViewModeSet" />
+        <field id="goHome" type="boolean" value="false" />
+    </interface>
+    <children>
+        <!-- === BROWSE UI (shown when not playing, or as overlay) === -->
+        <Group id="browseUI">
+            <!-- Backgrounds (full bleed) -->
+            <Rectangle width="1920" height="1080" color="#ffffff" />
+            <Rectangle width="1920" height="115" color="#faf5ef" />
+            <Rectangle translation="[0, 115]" width="480" height="840" color="#f5ede3" />
+            <Rectangle translation="[480, 115]" width="2" height="840" color="#e0d0c0" />
+            <Rectangle translation="[0, 955]" width="1920" height="125" color="#faf5ef" />
+
+            <!-- Header -->
+            <Poster id="titleLogo"
+                    translation="[90, 35]"
+                    width="140"
+                    height="56"
+                    uri="pkg:/images/toskr.png" />
+            <Label id="searchIndicator"
+                   text=""
+                   font="font:SmallSystemFont"
+                   color="#904010"
+                   translation="[250, 50]" />
+
+            <!-- Left panel: navigation list (countries or categories) -->
+            <MarkupGrid id="navList"
+                         translation="[80, 125]"
+                         itemSize="[380, 48]"
+                         itemSpacing="[0, 2]"
+                         numColumns="1"
+                         numRows="15"
+                         wrap="true"
+                         drawFocusFeedback="false"
+                         itemComponentName="CountryItem" />
+
+            <!-- Right panel: channels -->
+            <Group id="rightPanel" translation="[500, 115]">
+                <Label id="channelHeader"
+                       translation="[20, 12]"
+                       font="font:MediumBoldSystemFont"
+                       color="#904010"
+                       width="500"
+                       text="" />
+                <Label id="channelCount"
+                       translation="[20, 48]"
+                       font="font:SmallestSystemFont"
+                       color="#b08060"
+                       text="" />
+
+                <MarkupGrid id="channelList"
+                             translation="[10, 75]"
+                             itemSize="[860, 56]"
+                             itemSpacing="[0, 2]"
+                             numColumns="1"
+                             numRows="12"
+                             wrap="true"
+                             drawFocusFeedback="false"
+                             itemComponentName="ChannelRow"
+                             visible="false" />
+
+                <!-- Channel info sidebar -->
+                <Group id="channelInfo" translation="[900, 75]" visible="false">
+                    <Rectangle width="380" height="500" color="#faf5ef" />
+                    <Rectangle width="3" height="500" color="#f07020" opacity="0.4" />
+                    <Label id="infoName"
+                           translation="[20, 20]"
+                           font="font:SmallBoldSystemFont"
+                           color="#301000"
+                           width="340"
+                           wrap="true"
+                           maxLines="3" />
+                    <Label id="infoLang"
+                           translation="[20, 150]"
+                           font="font:SmallestSystemFont"
+                           color="#906840" />
+                    <Poster id="infoFavIcon"
+                            translation="[20, 183]"
+                            width="20"
+                            height="24"
+                            uri=""
+                            visible="false" />
+                    <Label id="infoFav"
+                           translation="[20, 183]"
+                           font="font:SmallBoldSystemFont"
+                           color="#f07020" />
+                    <Label id="infoStreams"
+                           translation="[20, 225]"
+                           font="font:SmallestSystemFont"
+                           color="#906840" />
+                </Group>
+
+                <!-- Empty state -->
+                <Label id="emptyText"
+                       translation="[20, 280]"
+                       font="font:SmallSystemFont"
+                       color="#b08060"
+                       width="500"
+                       wrap="true"
+                       text="" />
+            </Group>
+
+            <!-- Hints bar -->
+            <Label id="hintsText"
+                   translation="[90, 970]"
+                   font="font:SmallBoldSystemFont"
+                   color="#904010"
+                   text="" />
+        </Group>
+
+        <!-- === VIDEO PLAYER (behind overlay when browsing during playback) === -->
+        <Video id="player"
+               translation="[0, 0]"
+               width="1920"
+               height="1080"
+               visible="false"
+               enableUI="false"
+               enableTrickPlay="false" />
+
+        <!-- === OVERLAY (semi-transparent browse UI shown over playing video) === -->
+        <Group id="overlayGroup" visible="false">
+            <Rectangle width="1920" height="1080" color="#000000" opacity="0.7" />
+
+            <!-- Overlay left panel -->
+            <Rectangle translation="[0, 115]" width="480" height="840" color="#19100a" opacity="0.85" />
+            <Rectangle translation="[480, 115]" width="2" height="840" color="#f07020" opacity="0.4" />
+
+            <!-- Overlay header with background -->
+            <Rectangle translation="[0, 0]" width="480" height="115" color="#19100a" opacity="0.9" />
+            <Label id="overlayTitle"
+                   translation="[90, 45]"
+                   font="font:MediumBoldSystemFont"
+                   color="#f07020"
+                   width="370"
+                   text="" />
+
+            <!-- Overlay channel list -->
+            <MarkupGrid id="overlayChannelList"
+                         translation="[80, 125]"
+                         itemSize="[380, 48]"
+                         itemSpacing="[0, 2]"
+                         numColumns="1"
+                         numRows="15"
+                         wrap="true"
+                         drawFocusFeedback="false"
+                         itemComponentName="CountryItem" />
+
+            <!-- Overlay hints -->
+            <Rectangle translation="[0, 955]" width="1920" height="125" color="#19100a" opacity="0.85" />
+            <Label id="overlayHints"
+                   translation="[90, 970]"
+                   font="font:SmallBoldSystemFont"
+                   color="#f07020"
+                   text="[OK] Select   [Play] Favorite   [Back] Back   [Right] Dismiss" />
+        </Group>
+
+        <!-- Loading overlay -->
+        <Group id="loadingGroup" visible="false">
+            <Rectangle width="1920" height="1080" color="#ffffff" opacity="0.9" />
+            <Label id="loadingText"
+                   text="Loading..."
+                   font="font:MediumSystemFont"
+                   color="#f07020"
+                   translation="[960, 500]"
+                   horizAlign="center" />
+        </Group>
+    </children>
+
+    <script type="text/brightscript" uri="MainScene.brs" />
+</component>

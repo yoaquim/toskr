@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="CountryItem" extends="Group">
+    <interface>
+        <field id="itemContent" type="node" onChange="onContentChanged" />
+        <field id="focusPercent" type="float" onChange="onFocusChanged" />
+    </interface>
+    <children>
+        <Rectangle id="bg" width="380" height="48" color="#f5ede3" />
+        <Rectangle id="focusBg" width="380" height="48" color="#f07020" visible="false" />
+        <Rectangle id="accentBar" width="3" height="48" color="#f07020" visible="false" />
+        <Poster id="favIcon"
+                translation="[12, 8]"
+                width="22"
+                height="27"
+                uri=""
+                visible="false" />
+        <Label id="label"
+               translation="[16, 11]"
+               font="font:SmallSystemFont"
+               color="#704020"
+               width="348" />
+    </children>
+    <script type="text/brightscript" uri="CountryItem.brs" />
+</component>

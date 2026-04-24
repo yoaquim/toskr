@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="HomeScene" extends="Scene">
+    <interface>
+        <field id="selectedMode" type="string" value="" />
+    </interface>
+    <children>
+        <!-- Background -->
+        <Rectangle width="1920" height="1080" color="#ffffff" />
+
+        <!-- Logo centered -->
+        <Poster id="logo"
+                translation="[810, 180]"
+                width="300"
+                height="120"
+                uri="pkg:/images/toskr.png" />
+
+        <!-- Tagline -->
+        <Label id="tagline"
+               text="Search streams by..."
+               font="font:MediumSystemFont"
+               color="#904010"
+               horizAlign="center"
+               width="1920"
+               translation="[0, 330]" />
+
+        <!-- Three cards centered — no background rects, use opacity for selection -->
+        <LayoutGroup id="cardRow"
+                      translation="[960, 400]"
+                      layoutDirection="horiz"
+                      horizAlignment="center"
+                      itemSpacings="[60]">
+
+            <Poster id="cardCountry"
+                    width="310"
+                    height="310"
+                    opacity="1.0"
+                    uri="pkg:/images/country.png" />
+
+            <Poster id="cardFavorites"
+                    width="310"
+                    height="310"
+                    opacity="0.4"
+                    uri="pkg:/images/favorites.png" />
+
+            <Poster id="cardSurf"
+                    width="310"
+                    height="310"
+                    opacity="0.4"
+                    uri="pkg:/images/surf.png" />
+        </LayoutGroup>
+
+        <!-- Hints centered -->
+        <Label id="homeHints"
+               font="font:SmallBoldSystemFont"
+               color="#904010"
+               horizAlign="center"
+               width="1920"
+               translation="[0, 800]"
+               text="[Left/Right] Browse   [OK] Select" />
+    </children>
+
+    <script type="text/brightscript" uri="HomeScene.brs" />
+</component>
