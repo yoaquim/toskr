@@ -21,6 +21,8 @@ sub init()
     m.loadingText = m.top.findNode("loadingText")
     m.hintsNav = m.top.findNode("hintsNav")
     m.hintsChannel = m.top.findNode("hintsChannel")
+    m.radioDisplay = m.top.findNode("radioDisplay")
+    m.radioStationName = m.top.findNode("radioStationName")
 
     ' State
     m.viewMode = ""
@@ -536,11 +538,15 @@ end sub
 
 function detectStreamFormat(url as string) as string
     u = lcase(url)
-    if instr(1, u, ".mp3") > 0 then return "mp3"
-    if instr(1, u, ".aac") > 0 then return "aac"
     if instr(1, u, ".m3u8") > 0 then return "hls"
     if instr(1, u, ".mpd") > 0 then return "dash"
     if instr(1, u, ".mp4") > 0 then return "mp4"
+    if instr(1, u, ".mp3") > 0 then return "mp3"
+    if instr(1, u, ".aac") > 0 then return "aac"
+    if instr(1, u, ".ogg") > 0 then return "ogg"
+    if instr(1, u, ".flac") > 0 then return "flac"
+    ' No clear extension — use mode-appropriate default
+    if m.viewMode = "radio" then return "mp3"
     return "hls"
 end function
 
@@ -767,6 +773,14 @@ sub playStream(url as string, channelTitle as string)
 
     m.browseUI.visible = false
     m.state = "playing"
+
+    ' Show radio display for audio-only streams
+    if m.viewMode = "radio"
+        m.radioDisplay.visible = true
+        m.radioStationName.text = channelTitle
+    else
+        m.radioDisplay.visible = false
+    end if
 end sub
 
 sub onPlayerStateChange()
@@ -805,6 +819,7 @@ end sub
 sub stopPlayer()
     m.player.control = "stop"
     m.player.visible = false
+    m.radioDisplay.visible = false
     m.browseUI.visible = true
     m.overlayGroup.visible = false
     m.overlayVisible = false
@@ -974,14 +989,13 @@ function onKeyEvent(key as string, press as boolean) as boolean
 
     ' --- PLAYING MODE (no overlay) ---
     if m.state = "playing"
-        if key = "back"
+        if key = "back" or (key = "OK" and m.viewMode = "radio")
             stopPlayer()
             return true
         else if key = "left"
             showOverlay()
             return true
         else if key = "play"
-            ' Play button = toggle favorite on current channel
             toggleFavorite(m.currentPlayingIndex)
             return true
         end if
