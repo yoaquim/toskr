@@ -14,6 +14,9 @@ sub onContentChanged()
     if content.description = "fav"
         m.favIcon.uri = "pkg:/images/fav_acorn.png"
         m.favIcon.visible = true
+    else if content.description = "yt"
+        m.favIcon.uri = "pkg:/images/youtube.png"
+        m.favIcon.visible = true
     else
         m.favIcon.uri = ""
         m.favIcon.visible = false

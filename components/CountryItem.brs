@@ -12,9 +12,13 @@ sub onContentChanged()
 
     itemType = content.description
 
-    ' Show acorn icon for favorites item or favorited channels
+    ' Show icon for favorites, favorited channels, or YouTube channels
     if itemType = "FAVORITES" or itemType = "fav"
         m.favIcon.uri = "pkg:/images/fav_acorn.png"
+        m.favIcon.visible = true
+        m.label.translation = [40, 11]
+    else if itemType = "yt"
+        m.favIcon.uri = "pkg:/images/youtube.png"
         m.favIcon.visible = true
         m.label.translation = [40, 11]
     else

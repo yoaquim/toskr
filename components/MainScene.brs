@@ -343,7 +343,9 @@ sub onChannelsResponse()
 
     m.allChannelData = []
     for each channel in data
-        if channel.stream_urls <> invalid and channel.stream_urls.count() > 0
+        hasStreams = (channel.stream_urls <> invalid and channel.stream_urls.count() > 0)
+        hasYoutube = (channel.youtube_urls <> invalid and channel.youtube_urls.count() > 0)
+        if hasStreams or hasYoutube
             m.allChannelData.push(channel)
         end if
     end for
@@ -413,6 +415,8 @@ sub buildChannelContent()
         item.title = channelDisplayName(channel)
         if isFavorite(channel.nanoid)
             item.description = "fav"
+        else if isYouTubeOnly(channel)
+            item.description = "yt"
         else
             item.description = ""
         end if
@@ -424,10 +428,32 @@ end sub
 
 function channelDisplayName(channel as object) as string
     name = channel.name
-    if channel.languages <> invalid and channel.languages.count() > 0
+    if isYouTubeOnly(channel)
+        name = "[YT] " + name
+    else if channel.languages <> invalid and channel.languages.count() > 0
         name = "[" + ucase(channel.languages[0]) + "] " + name
     end if
     return name
+end function
+
+function isYouTubeOnly(channel as object) as boolean
+    hasStreams = (channel.stream_urls <> invalid and channel.stream_urls.count() > 0)
+    hasYoutube = (channel.youtube_urls <> invalid and channel.youtube_urls.count() > 0)
+    return (not hasStreams) and hasYoutube
+end function
+
+function extractYouTubeId(url as string) as string
+    ' Extract video ID from youtube embed URL
+    ' e.g. https://www.youtube-nocookie.com/embed/VIDEO_ID
+    idx = instr(1, url, "/embed/")
+    if idx > 0
+        return mid(url, idx + 7)
+    end if
+    idx = instr(1, url, "v=")
+    if idx > 0
+        return mid(url, idx + 2)
+    end if
+    return ""
 end function
 
 ' ===== SEARCH =====
@@ -588,7 +614,11 @@ sub updateChannelInfo(index as integer)
         m.infoFav.translation = [20, 183]
     end if
 
-    m.infoStreams.text = str(channel.stream_urls.count()).trim() + " stream(s)"
+    if isYouTubeOnly(channel)
+        m.infoStreams.text = "Opens in YouTube app"
+    else
+        m.infoStreams.text = str(channel.stream_urls.count()).trim() + " stream(s)"
+    end if
 end sub
 
 ' ===== SELECTION HANDLERS =====
@@ -651,14 +681,27 @@ sub onChannelSelected()
     if index < 0 or index >= m.displayedChannelData.count() then return
 
     channel = m.displayedChannelData[index]
-    urls = channel.stream_urls
-    if urls.count() = 0 then return
-
-    m.currentStreamUrls = urls
-    m.currentStreamIndex = 0
     m.currentPlayingIndex = index
 
-    playStream(urls[0], channel.name)
+    if isYouTubeOnly(channel)
+        launchYouTube(channel)
+    else
+        urls = channel.stream_urls
+        if urls.count() = 0 then return
+        m.currentStreamUrls = urls
+        m.currentStreamIndex = 0
+        playStream(urls[0], channel.name)
+    end if
+end sub
+
+sub launchYouTube(channel as object)
+    url = channel.youtube_urls[0]
+    videoId = extractYouTubeId(url)
+    if videoId = "" then return
+
+    task = createObject("roSGNode", "YouTubeLauncher")
+    task.videoId = videoId
+    task.control = "run"
 end sub
 
 sub onOverlayItemSelected()
@@ -673,25 +716,31 @@ sub onOverlayItemSelected()
         m.overlayTitle.text = m.navNames[code] + " — Loading..."
         fetchOverlayChannels(code)
     else if m.overlayState = "channels"
-        ' Selected a channel — switch stream
+        ' Selected a channel
         if index < 0 or index >= m.displayedChannelData.count() then return
         channel = m.displayedChannelData[index]
-        urls = channel.stream_urls
-        if urls.count() = 0 then return
-
-        m.currentStreamUrls = urls
-        m.currentStreamIndex = 0
         m.currentPlayingIndex = index
 
-        videoContent = createObject("roSGNode", "ContentNode")
-        videoContent.url = urls[0]
-        videoContent.title = channel.name
-        videoContent.streamFormat = detectStreamFormat(videoContent.url)
-        m.player.content = videoContent
-        m.player.control = "play"
+        if isYouTubeOnly(channel)
+            hideOverlay()
+            launchYouTube(channel)
+        else
+            urls = channel.stream_urls
+            if urls.count() = 0 then return
 
-        if m.navNames.doesExist(m.selectedNavCode)
-            m.overlayTitle.text = m.navNames[m.selectedNavCode]
+            m.currentStreamUrls = urls
+            m.currentStreamIndex = 0
+
+            videoContent = createObject("roSGNode", "ContentNode")
+            videoContent.url = urls[0]
+            videoContent.title = channel.name
+            videoContent.streamFormat = detectStreamFormat(videoContent.url)
+            m.player.content = videoContent
+            m.player.control = "play"
+
+            if m.navNames.doesExist(m.selectedNavCode)
+                m.overlayTitle.text = m.navNames[m.selectedNavCode]
+            end if
         end if
     end if
 end sub
@@ -726,7 +775,9 @@ sub onOverlayChannelsResponse()
 
     m.allChannelData = []
     for each channel in data
-        if channel.stream_urls <> invalid and channel.stream_urls.count() > 0
+        hasStreams = (channel.stream_urls <> invalid and channel.stream_urls.count() > 0)
+        hasYoutube = (channel.youtube_urls <> invalid and channel.youtube_urls.count() > 0)
+        if hasStreams or hasYoutube
             m.allChannelData.push(channel)
         end if
     end for
@@ -943,6 +994,8 @@ sub showOverlayChannels()
         item.title = channelDisplayName(channel)
         if isFavorite(channel.nanoid)
             item.description = "fav"
+        else if isYouTubeOnly(channel)
+            item.description = "yt"
         else
             item.description = ""
         end if
