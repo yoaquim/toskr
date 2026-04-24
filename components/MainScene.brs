@@ -428,10 +428,10 @@ end sub
 
 function channelDisplayName(channel as object) as string
     name = channel.name
-    if isYouTubeOnly(channel)
-        name = "[YT] " + name
-    else if channel.languages <> invalid and channel.languages.count() > 0
-        name = "[" + ucase(channel.languages[0]) + "] " + name
+    if not isYouTubeOnly(channel)
+        if channel.languages <> invalid and channel.languages.count() > 0
+            name = "[" + ucase(channel.languages[0]) + "] " + name
+        end if
     end if
     return name
 end function

@@ -8,11 +8,19 @@
         <Rectangle id="rowBg" width="860" height="56" color="#ffffff" cornerRadius="8" />
         <Rectangle id="focusBg" width="860" height="56" color="#f07020" cornerRadius="8" visible="false" />
         <Rectangle id="accentBar" width="4" height="56" color="#f07020" visible="false" />
+        <!-- Left icon (YouTube logo) -->
+        <Poster id="leftIcon"
+                translation="[14, 14]"
+                width="40"
+                height="28"
+                uri=""
+                visible="false" />
         <Label id="nameLabel"
                translation="[20, 14]"
                font="font:SmallSystemFont"
                color="#704020"
                width="760" />
+        <!-- Right icon (acorn favorite) -->
         <Poster id="favIcon"
                 translation="[815, 10]"
                 width="24"

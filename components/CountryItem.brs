@@ -15,12 +15,18 @@ sub onContentChanged()
     ' Show icon for favorites, favorited channels, or YouTube channels
     if itemType = "FAVORITES" or itemType = "fav"
         m.favIcon.uri = "pkg:/images/fav_acorn.png"
+        m.favIcon.width = 22
+        m.favIcon.height = 27
+        m.favIcon.translation = [12, 8]
         m.favIcon.visible = true
         m.label.translation = [40, 11]
     else if itemType = "yt"
         m.favIcon.uri = "pkg:/images/youtube.png"
+        m.favIcon.width = 36
+        m.favIcon.height = 25
+        m.favIcon.translation = [10, 12]
         m.favIcon.visible = true
-        m.label.translation = [40, 11]
+        m.label.translation = [50, 11]
     else
         m.favIcon.visible = false
         m.label.translation = [16, 11]
