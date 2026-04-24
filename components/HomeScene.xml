@@ -29,7 +29,7 @@
                 width="600"
                 height="120"
                 opacity="0.4"
-                uri="pkg:/images/favorites-alt.png" />
+                uri="pkg:/images/favorites.png" />
 
         <!-- Three cards centered -->
         <LayoutGroup id="cardRow"
